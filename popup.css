@@ -1,0 +1,440 @@
+/* Signal-box theme: each rule is a set of points, toggled by a lever in a
+   Brunswick-green frame running down the left edge of the popup. */
+
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass-latin-400.woff2") format("woff2");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass-latin-600.woff2") format("woff2");
+  font-weight: 600;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("fonts/overpass-latin-800.woff2") format("woff2");
+  font-weight: 800;
+}
+@font-face {
+  font-family: "Overpass Mono";
+  src: url("fonts/overpass-mono-latin-400.woff2") format("woff2");
+  font-weight: 400;
+}
+
+:root {
+  --wall: #e6ebe8;
+  --field: #f6f8f7;
+  --ink: #1d2522;
+  --ink-soft: #4d5a55;
+  --ink-faint: #8e9a95;
+  --rule: #bcc7c2;
+  --frame: #2f5b46;
+  --frame-seam: #244836;
+  --slot: #17201c;
+  --steel: #a7b0ac;
+  --steel-lit: #dfe5e2;
+  --lever: #222a27;
+  --signal-red: #b3261e;
+  --signal-yellow: #d9a92e;
+  --branch: #2f5b46;
+  --focus: #2f5b46;
+
+  /* Logo colors */
+  --brand-green: #0a9a48;
+  --brand-grey-from: #4e5d66;
+  --brand-grey-to: #7f8c92;
+
+  --sans: "Overpass", system-ui, sans-serif;
+  --mono: "Overpass Mono", ui-monospace, monospace;
+
+  /* Type scale: 12 / 14 / 21 */
+  --step-0: 12px;
+  --step-1: 14px;
+  --step-3: 21px;
+
+  --frame-width: 46px;
+  --gutter: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --wall: #18201d;
+    --field: #202a26;
+    --ink: #e3e9e6;
+    --ink-soft: #a9b5b0;
+    --ink-faint: #66736e;
+    --rule: #34413c;
+    --frame: #2f5b46;
+    --frame-seam: #23452f;
+    --slot: #0d1210;
+    --steel: #8f9995;
+    --steel-lit: #e3e9e6;
+    --lever: #0d1210;
+    --signal-red: #ec6a5e;
+    --signal-yellow: #e3b544;
+    --branch: #74ab8f;
+    --focus: #e3b544;
+    --brand-green: #22b862;
+    --brand-grey-from: #7d8b92;
+    --brand-grey-to: #aab5ba;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 380px;
+  margin: 0;
+  background: var(--wall);
+  color: var(--ink);
+  font: 400 var(--step-1) / 1.45 var(--sans);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+code,
+.url {
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+/* Header */
+
+.masthead {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: var(--gutter) var(--gutter) 0;
+}
+
+.masthead p {
+  grid-column: 1 / -1;
+  margin: 6px 0 0;
+  color: var(--ink-soft);
+}
+
+/* Logo: the S mark drawn in SVG so it follows the light/dark theme. */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: var(--step-3);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.logo-mark {
+  width: 22px;
+  height: 35px;
+  overflow: visible;
+}
+
+.logo-top,
+.logo-bottom {
+  fill: none;
+  stroke-width: 11;
+}
+
+.logo-top {
+  stroke: var(--brand-green);
+  stroke-linecap: round;
+}
+
+.logo-bottom {
+  stroke: url(#logo-grey);
+  stroke-linecap: round;
+}
+
+.logo-arrow {
+  fill: var(--brand-grey-to);
+}
+
+.logo-grey-from {
+  stop-color: var(--brand-grey-from);
+}
+
+.logo-grey-to {
+  stop-color: var(--brand-grey-to);
+}
+
+.logo-switch {
+  color: var(--brand-green);
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin: -6px -8px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.close svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+}
+
+.close:hover {
+  background: var(--rule);
+  color: var(--ink);
+}
+
+/* Add-rule form */
+
+.draft {
+  display: grid;
+  gap: 10px;
+  padding: 14px var(--gutter) var(--gutter);
+}
+
+.field {
+  display: grid;
+  gap: 3px;
+}
+
+.field > span {
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.field em {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--ink-faint);
+}
+
+.url {
+  width: 100%;
+  padding: 7px 8px 5px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--field);
+  color: var(--ink);
+}
+
+.url::placeholder {
+  color: var(--ink-faint);
+}
+
+.url:focus-visible {
+  outline-offset: 0;
+  border-color: var(--focus);
+}
+
+/* "With" branches off "Replace", like a turnout off the main line. */
+.field--branch {
+  position: relative;
+  margin-top: -4px;
+  padding-left: 22px;
+}
+
+.field--branch::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 0;
+  width: 10px;
+  height: 36px;
+  border-left: 2px solid var(--branch);
+  border-bottom: 2px solid var(--branch);
+  border-bottom-left-radius: 8px;
+}
+
+.draft button {
+  justify-self: start;
+  margin-top: 2px;
+  padding: 7px 14px 5px;
+  border: 0;
+  border-radius: 3px;
+  background: var(--frame);
+  color: #f2f5f3;
+  font: 600 var(--step-1) / 1.45 var(--sans);
+  cursor: pointer;
+}
+
+.draft button:hover {
+  background: var(--frame-seam);
+}
+
+#error {
+  margin: 0 var(--gutter) var(--gutter);
+  padding-left: 10px;
+  border-left: 3px solid var(--signal-red);
+  color: var(--signal-red);
+}
+
+/* Lever frame: the rule list */
+
+.frame {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.rule {
+  display: grid;
+  grid-template-columns: var(--frame-width) 1fr;
+}
+
+.lever-cell {
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+  background: var(--frame);
+  border-bottom: 1px solid var(--frame-seam);
+}
+
+/* The lever: a slot with a handle. Back (top) is off, pulled (bottom) is on. */
+.lever {
+  appearance: none;
+  position: relative;
+  width: 12px;
+  height: 46px;
+  margin: 0;
+  border-radius: 6px;
+  background: var(--slot);
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.6);
+  cursor: pointer;
+}
+
+.lever::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 1px;
+  width: 24px;
+  height: 14px;
+  border-radius: 3px;
+  background: linear-gradient(var(--steel) 0 55%, var(--lever) 55%);
+  box-shadow: 0 2px 0 rgb(0 0 0 / 0.35);
+  transition: transform 220ms cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.lever:checked::before {
+  background: linear-gradient(var(--steel-lit) 0 55%, var(--lever) 55%);
+  transform: translateY(30px);
+}
+
+.lever:focus-visible {
+  outline-offset: 7px;
+}
+
+.route {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 8px;
+  align-content: start;
+  padding: 12px var(--gutter) 12px 14px;
+  border-bottom: 1px solid var(--rule);
+  min-width: 0;
+}
+
+.route > * {
+  grid-column: 1;
+  word-break: break-all;
+}
+
+.route-from {
+  color: var(--ink);
+}
+
+.route-to {
+  position: relative;
+  margin-top: 4px;
+  padding-left: 22px;
+  color: var(--ink);
+}
+
+.route-to::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: -5px;
+  width: 10px;
+  height: 14px;
+  border-left: 2px solid var(--branch);
+  border-bottom: 2px solid var(--branch);
+  border-bottom-left-radius: 8px;
+}
+
+.route-when {
+  margin: 6px 0 0;
+  font-size: var(--step-0);
+  color: var(--ink-soft);
+}
+
+.route-when code {
+  padding: 1px 4px 0;
+  border-radius: 2px;
+  background: var(--signal-yellow);
+  color: #1d2522;
+  font-size: var(--step-0);
+}
+
+/* Lever back: requests stay on the main line, so the branch is dimmed. */
+.rule.is-off .route-from,
+.rule.is-off .route-to {
+  color: var(--ink-faint);
+}
+
+.rule.is-off .route-to::before {
+  border-color: var(--rule);
+}
+
+.rule.is-off .route-when code {
+  background: var(--rule);
+  color: var(--ink-soft);
+}
+
+.route .delete {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  padding: 0 2px;
+  border: 0;
+  background: none;
+  color: var(--ink-soft);
+  font: 400 var(--step-0) / 1.6 var(--sans);
+  cursor: pointer;
+}
+
+.route .delete:hover,
+.route .delete:focus-visible {
+  color: var(--signal-red);
+  text-decoration: underline;
+}
+
+/* An empty frame: just the green rail and a prompt. */
+.frame-empty {
+  margin: 0;
+  padding: 14px var(--gutter) 16px 14px;
+  border-left: var(--frame-width) solid var(--frame);
+  color: var(--ink-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lever::before {
+    transition: none;
+  }
+}

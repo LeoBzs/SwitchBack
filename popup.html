@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header class="masthead">
+      <h1 class="logo">
+        <svg class="logo-mark" viewBox="0 0 56 90" aria-hidden="true">
+          <defs>
+            <linearGradient id="logo-grey" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0" class="logo-grey-from" />
+              <stop offset="1" class="logo-grey-to" />
+            </linearGradient>
+          </defs>
+          <path class="logo-top" d="M42.6 14.8 A20 20 0 1 0 26 46" />
+          <path class="logo-bottom" d="M6 73 C14 82 31 86 42 77 C50 70 51 60 44 52" />
+          <path class="logo-arrow" d="M34 31 L55 42 L38 57 Z" />
+        </svg>
+        <span class="logo-word"><span class="logo-switch">switch</span>Back</span>
+      </h1>
+      <button type="button" id="close" class="close" aria-label="Close SwitchBack" title="Close">
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M3.5 3.5 L12.5 12.5 M12.5 3.5 L3.5 12.5" />
+        </svg>
+      </button>
+      <p>Send matching requests to a different address.</p>
+    </header>
+
+    <form id="add-form" class="draft">
+      <label class="field">
+        <span>Only if URL contains <em>(optional)</em></span>
+        <input id="when" class="url" placeholder="?id=1" autocomplete="off" spellcheck="false" />
+      </label>
+      <label class="field">
+        <span>Replace</span>
+        <input id="find" class="url" placeholder="https://website.com" required autocomplete="off" spellcheck="false" />
+      </label>
+      <label class="field field--branch">
+        <span>With</span>
+        <input id="replace" class="url" placeholder="http://localhost:8000" autocomplete="off" spellcheck="false" />
+      </label>
+      <button type="submit">Add rule</button>
+    </form>
+
+    <p id="error" role="alert" hidden></p>
+
+    <ul id="rules" class="frame"></ul>
+    <p id="empty" class="frame-empty">No rules yet. Add one above and matching requests will go to the new address.</p>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
